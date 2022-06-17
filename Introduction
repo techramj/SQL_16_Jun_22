@@ -1,0 +1,100 @@
+SQL:
+
+ DB : data
+ 
+ Library:  DBMS
+ 
+ Warehouse: DS
+ 
+ 
+ RDBMS:  EF Codd 12 
+ ORDBMS:
+ 
+ DB
+ SQL   SQL SERVER DB2 MYSQL 
+ 
+ Oracle
+ 
+ SQL: 80
+ 
+ DML:(Data Manupulation language)
+ Select
+ Insert
+ Update
+ Delete
+ Merge
+ 
+ 
+ DDL: Data defintion language
+ Create
+ Alter
+ Rename
+ Truncate
+ Drop
+ 
+ 
+ DCL: data control language
+ Grant
+ Revoke
+ 
+ 
+ TCL: transaction Control language
+ Commit
+ Rollback
+ savepoint
+ 
+ 
+ Normalization
+ 
+ Keyword:
+ 
+ Key : Key is an attribute which identify the row uniquly.
+ 
+ Eg:Id, email, mob
+ Non key: Name,salary,dob
+ Super key:It is an attribute or set of attribute which identify the row uniquely. 
+i, n, s, d, e, m		y	6
+i, n, s, d, e,			y	5
+i, n, s, d, 			y	4
+i, n, s, 				y	3
+n, s, d					n
+i, n 					y	2
+s, n					n
+n, d					n
+i						y	1
+n						n
+s						n
+e						y	1
+m						y	1
+		  
+candiate key: It is a super key which identify the row uniquely. It is minimal set of super key.
+minimal set = 1
+Eg:id, email, mobile
+ 
+ 
+ Primary key : Primary key is a candiate key which is unique and not null.
+ eg: id
+ unique: it is a candiate key which is unique and null is allowed.
+ 
+ 
+ alternate key: A candiate key other than priamry key
+ email, mobile
+ 
+ foreign key: foreign key is a key in one table and refered to another table.
+ 
+ Composite key: 
+ 
+ surrogate key: 
+
+ Primary / Unique :
+ 
+ 
+ 
+ Normalization:
+ 
+ 
+ 
+ 
+ 
+ 
+ 
