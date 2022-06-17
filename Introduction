@@ -90,7 +90,23 @@ Eg:id, email, mobile
  
  
  
- Normalization:
+ Normalization: Nomarlization is the process to minimize the redundancy and remove all the anamolies. 
+ 
+ 1 NF: There should be duplication of an attribute and attrubute can be divided into meaningful attrbute.1 NF mush have primary key.
+ 
+ 
+ 2 NF: The table must be 1-NF and every non-key should depend upon key. It remove all three anamolies(Insert, update, delete)
+ 
+ 
+ 3 NF: Table must be 2-NF and non key should not depend upon another non-key.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
