@@ -1,0 +1,71 @@
+select * from employees;
+
+desc employees
+
+select employee_id, last_name, salary, hire_date ,first_name
+from employees;
+
+
+--wap to display id and full name
+select employee_id,first_name||last_name
+from employees;
+
+select employee_id,first_name||' '||last_name as name
+from employees;
+
+select employee_id as id,first_name ||' '||last_name as name
+from employees;
+
+select employee_id  id,first_name ||' '||last_name  "full name"
+from employees;
+
+
+select first_name  last_name from employees;
+
+
+select last_name, salary from employees;
+
+--display the name and salary in below format as give the column name as detail.
+--The salary of King is 24000
+--The salary of Kochhar is 17000
+
+select 'The salary of '||last_name||' is '||salary as details
+from employees;
+
+
+--display the name and salary in below format as give the column name as detail.
+--King's salary is 24000
+--Kochhar's salary is 17000
+
+select last_name||'''s salary is ' ||salary as details 
+from employees;
+
+select last_name|| q'['s salary is ]'||salary as details
+from employees;
+
+select employee_id,last_name, manager_id 
+from employees;
+
+select distinct  manager_id from employees;
+
+
+select distinct last_name,job_id from employees;
+
+select employee_id  as "Employee number" ,last_name as "Last Name", job_id as "Job Code", 
+hire_date as startdate
+from employees;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
