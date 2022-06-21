@@ -1,0 +1,287 @@
+
+1. SQL is not case sensitive.
+2. Desc table_name  => display structure of the table_name
+3. select * from table_name;  => display all the content of the table
+4. || is used to concat two columns
+5. literal should be used within single quote
+6. alias can be written in double quote
+7. any thing writtten in single or double quotes are case sensitive
+8. if the literal contains quote then use quote operatior q'[]'
+
+
+9.if you want to restrict the data, think of where clause
+   select col1, col2...
+   from table_name
+   where <condtion>
+   
+Sql condtional operator
+>
+>=
+<
+<=
+!=   <>    ^=
+=
+IN
+between and
+IS
+LIKE
+   %  0 or many
+   _  1
+   
+
+
+Logical operator
+and 
+or 
+not 
+
+
+10. Literals are case sensitive and date are format sensitive
+11. default format of date DD-MON-RR
+12. don't use any operator with null, except is
+
+
+
+
+commands:
+
+Desc table_name
+set line 200
+cl scr
+
+
+
+--working of query
+from
+where
+order by
+
+from => where => select  => order by
+
+
+
+
+
+----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+SELECT last_name,department_id 
+FROM employees 
+WHERE department_id = 10 
+OR department_id = 30
+OR department_id=40
+OR department_id=100;
+
+
+
+SELECT last_name,department_id 
+FROM employees 
+WHERE department_id IN (10,30,40,100);
+
+
+
+
+--waq to find emp who is not working in dept 50 and 80
+SELECT last_name,department_id 
+FROM employees 
+WHERE department_id <> 50 AND department_id != 80;
+
+SELECT last_name,department_id 
+FROM employees 
+WHERE department_id NOT IN (50,80);
+
+
+
+--waq to find employee whose salary>=8000 and salary=<12000
+SELECT last_name,salary
+FROM employees
+WHERE salary>=8000
+AND salary<=12000;
+
+--or
+
+SELECT last_name,salary
+FROM employees
+WHERE salary BETWEEN 8000 AND 12000;
+
+
+--waq to find employee whose salary<4000 and salary>12000
+SELECT last_name,salary
+FROM employees
+WHERE salary<4000
+OR salary>12000;
+
+--or
+
+SELECT last_name,salary
+FROM employees
+WHERE salary NOT BETWEEN 4000 AND 12000;
+
+
+--waq to find detail of employee whose name is king
+SELECT * 
+FROM employees
+WHERE last_name ='King';
+
+
+SELECT last_name,hire_date
+FROM employees
+WHERE hire_date = '17-jun-03';
+
+
+--handle null
+SELECT last_name,salary, commission_pct,
+salary + salary*commission_pct AS net_salary
+FROM employees;
+
+
+--list of emp having no commission
+SELECT last_name,salary, commission_pct
+FROM employees
+WHERE commission_pct IS NULL;
+
+
+--list of emp having  commission
+SELECT last_name,salary, commission_pct
+FROM employees
+WHERE commission_pct IS NOT NULL;
+
+--------------------------------
+--when you don't want to fetch data from any table then use dummy table=> DUAL
+SELECT  20+30
+FROM dual;
+
+
+SELECT SYSDATE
+FROM dual;
+
+--LIKE operator  % _
+--list of emp whose name start with letter A
+SELECT last_name
+FROM employees
+WHERE last_name LIKE 'A%';
+
+
+--list of emp whose name 2nd letter is t
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '_t%';
+
+
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '%a_';
+
+--name contain letter a  and e
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '%a%'  
+AND last_name LIKE  '%e%';  
+
+
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '%a%e%'  
+OR last_name LIKE '%e%a%'; 
+
+
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '___';
+
+
+--emp hired in the month of March
+SELECT last_name,hire_date
+FROM employees
+WHERE hire_date LIKE '%MAR%';
+
+
+
+--emp hired in year 2006
+SELECT last_name,hire_date
+FROM employees
+WHERE hire_date LIKE '%06';
+
+SELECT last_name,hire_date
+FROM employees
+WHERE hire_date BETWEEN '1-Jan-06' AND '31-dec-06';
+
+
+
+--sorting
+
+SELECT last_name,salary, department_id
+FROM employees
+ORDER BY last_name;
+
+SELECT last_name,salary, department_id
+FROM employees
+ORDER BY last_name DESC;
+
+SELECT last_name,salary, department_id
+FROM employees
+ORDER BY department_id DESC,salary DESC, last_name  DESC;
+
+
+
+--find emp having ann_salary >120000
+
+--from => where => select  => order by
+
+SELECT last_name, salary, salary*12 AS annsal
+FROM employees
+WHERE salary*12>120000
+ORDER BY annsal;
+
+
+
+select last_name,job_id,hire_date
+from employees
+where last_name ='Matos' OR last_name ='Taylor'
+order by hire_date ;
+
+select last_name,job_id,hire_date
+from employees
+where last_name  IN ('Matos' ,'Taylor')
+order by hire_date ;
+
+
+SELECT last_name AS "Employee", salary AS "Monthly salary"
+FROM employees
+WHERE salary BETWEEN 5000 AND 12000
+AND department_id IN (20,50)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
