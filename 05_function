@@ -1,0 +1,115 @@
+  1. Single Row Function
+  2. Multiple row function/group function/ aggregate function
+  
+  
+  SINGLE ROW FUNCTION
+  -----------------------
+  1. Char function
+    a. lower(str)
+    b. upper(str)
+    c. inicap(str)
+    d. length(str)
+    e. substr(str, position, [length])
+    f. instrs(str, searching_char, [postion],[occurence])
+    g. trim(str)
+    h.lpad(str, length of str, padding char)
+    i.lpad(str, length of str, padding char)
+    j.concat(str1,str2)
+    h.replace(str,'replace_char','replace_with_char')
+    
+  
+  2. Number function
+    a. round(num, [n])  ==> default value of n=0
+    b. trunc(num, [n])
+    c. mod(num1, num2)
+    d. ceil
+    e. floor
+    f. abs
+  
+  3. Date function
+  
+  4. Conversion Function
+  
+  5. General Function
+  
+  
+  
+  ------------------Example
+  SELECT LOWER('abc Def GHI'),UPPER('abc Def GHI'),INITCAP('abc Def GHI')
+FROM dual;
+
+SELECT * FROM employees
+WHERE UPPER(last_name)  = 'KING';
+
+
+SELECT * FROM employees
+WHERE UPPER(last_name)  = UPPER('&name');
+
+
+SELECT LENGTH('abcd  ') FROM dual;
+
+SELECT last_name
+FROM employees
+WHERE LENGTH(last_name) >=4;
+
+
+SELECT SUBSTR('abcdefghij',8) FROM dual;
+SELECT SUBSTR('abcdefghij',4,30) from dual;
+
+
+SELECT SUBSTR('abcdefghij',-5,2) FROM dual;     
+
+SELECT INSTR('abcdabcdaabbcc','c') FROM dual;   --3
+           
+SELECT INSTR('abcdabcdaabbcc','c',5) FROM dual;   --7
+
+SELECT INSTR('abcdabcdaabbcc','c',5,2) FROM dual; --13
+
+SELECT '  abc  def  ',LENGTH('  abc  def  '), rTRIM('  abc  def  '),
+LENGTH(TRIM('  abc  def  '))
+FROM dual;
+
+SELECT 'abcd', RPAD('abcd',3,'*') FROM dual;
+
+SELECT CONCAT('abc','def') FROM dual;
+SELECT 'abc'||'def' FROM dual;
+
+SELECT REPLACE('abaaade','a','x') FROM dual;
+
+
+
+
+
+SELECT ROUND(45673.74843,3) FROM  dual; -->=5 +1
+
+SELECT ROUND(45673.44843) FROM  dual;
+
+SELECT ROUND(45673.74843,-1) FROM  dual;
+
+
+SELECT TRUNC(45673.74843,3) FROM  dual; -->=5 +1
+
+SELECT TRUNC(45673.44843) FROM  dual;
+
+SELECT MOD(10,5) FROM dual;
+
+SELECT CEIL(-10.9), FLOOR(10.9) FROM dual;
+
+SELECT ABS(-10), ABS(10) FROM dual;
+
+
+--list of emp who first name ans lnmae start with same char. EG: sonu sood
+
+SELECT first_name,last_name
+FROM employees
+WHERE UPPER(SUBSTR(first_name,1,1)) = UPPER(SUBSTR(last_name,1,1))
+
+
+-- list of  emp who last_name start and end with same character . a
+
+SELECT first_name,last_name
+FROM employees
+WHERE UPPER(SUBSTR(last_name,1,1)) = UPPER(SUBSTR(last_name,-1))
+
+
+  
