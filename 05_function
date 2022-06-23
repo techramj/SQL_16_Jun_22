@@ -27,10 +27,26 @@
     f. abs
   
   3. Date function
+    a. sysdate
+    b. add_months(date, number)
+    c. months_between(date1, date2)
+    d. last_day(date)
+    e. next_day(date,'dy format')
+    f. round(date,'format specfirer')
+    g. trunc(date,'format specfirer')
   
   4. Conversion Function
+   a. TO_CHAR
+   b. TO_DATE
+   c. TO_NUMBER
   
   5. General Function
+   a. NVL
+   b. NVL2
+   c. COALESCE
+   4. CASE
+   5. DECODE
+   6. NULLIF
   
   
   
@@ -110,6 +126,194 @@ WHERE UPPER(SUBSTR(first_name,1,1)) = UPPER(SUBSTR(last_name,1,1))
 SELECT first_name,last_name
 FROM employees
 WHERE UPPER(SUBSTR(last_name,1,1)) = UPPER(SUBSTR(last_name,-1))
+
+
+
+/*
+lower, upper, initcap, substr, instr, lpad, rpad, trim, replace, concat
+round, trunc, mod, ceil, floor, abs
+
+Date function:
+1: default format DD-MON-RR
+2: day, month, ,year, hour, min, sec
+3. we can add or subtract the number from the date
+4. we can subtract two date give number of days between two date
+
+ 
+*/
+
+SELECT SYSDATE + 8/24 FROM dual;
+
+SELECT last_name, hire_date,  
+TRUNC(SYSDATE-hire_date) AS no_of_days,
+TRUNC((SYSDATE-hire_date)/30) AS no_of_months,
+TRUNC(months_between(SYSDATE, hire_date)) AS no_of_months1
+FROM employees;
+
+SELECT add_months(SYSDATE,12) FROM dual;
+
+SELECT last_day(SYSDATE) FROM dual;
+
+SELECT DISTINCT hire_date, last_day(hire_date) FROM employees;
+
+SELECT next_day(SYSDATE,'thu') FROM dual;
+
+--list of employee who is hired in feb month of leap year
+SELECT last_name,hire_date, last_day(hire_date)
+FROM employees
+WHERE last_day(hire_date) LIKE '29%';
+
+
+--find the date which will 6 month from today and first sunday.
+
+SELECT next_day(add_months(SYSDATE,6),'sun') FROM dual;
+
+
+
+--conversion function
+/*
+   number     char      date
+
+*/
+
+SELECT '1,234.00' +1 , 1234 FROM dual;
+
+--To_CHAR
+
+SELECT to_char(SYSDATE,'DD-MM-YYYY hh:mi:ss AM') FROM dual; -- dd-mm-yyyy
+
+SELECT last_name,hire_date,
+to_char(hire_date,'DD-MONTH-YYYY hh:mi:ss AM') FROM employees;
+
+--format 22nd March, 1999
+SELECT last_name,hire_date,
+to_char(hire_date,'ddth Month, yyyy') FROM employees;
+
+--format Monday, 22 of Jan, 1999
+SELECT last_name,hire_date,
+to_char(hire_date,'fmDay, dd "of" Mon, YYYY') FROM employees;
+
+--format Monday, Twenty two of Jan, 1999
+SELECT last_name,hire_date,
+to_char(hire_date,'fmDay, Ddsp "of" Mon, YYYY') FROM employees; --fm (fill mode)
+
+--list of employee who is hired on Monday.
+
+
+
+SELECT ROWNUM, last_name,hire_date
+FROM employees
+WHERE ROWNUM <=10;
+
+
+   *
+  ***
+ *****
+*******
+
+
+select lpad(' ',4-rownum,' ')||lpad('*',2*rownum-1,'*')
+from employees
+where rownum<=4;
+
+
+
+   *
+  ***
+ *****
+*******
+ *****
+  ***
+   *
+
+select lpad(' ', abs(4-rownum),' ')||lpad('*',2*(4-abs(4-rownum))-1,'*')
+from employees
+where rownum<=7;
+
+
+
+--to_char  number to char
+SELECT last_name,salary,
+to_char(salary,'l99,999,99.00')||' only/-'
+FROM employees;
+
+
+--to_number
+SELECT to_number('240,00.00','999,99.00') +1 FROM dual;
+
+--to_date
+SELECT to_date('1-jan-2022','dd-mon-yyyy')+1 FROM dual;
+
+
+
+
+--general function
+NVL(exp1, exp2): IF exp1 IS NULL THEN print exp2 ELSE exp1;
+--exp1 and exp2 should be of same type
+
+SELECT last_name, salary,NVL(commission_pct,0),
+salary +salary* NVL(commission_pct,0) 
+FROM employees;
+
+
+-- to print commission and if emp don't have comm then print no-comm
+SELECT last_name, salary,commission_pct,
+NVL(to_char(commission_pct,'0.00'),'No-Comm')
+FROM employees;
+
+
+
+NVL2(exxp1, exp2, exp3)  IF exp1 IS NOT NULL THEN exp2 ELSE exp3
+exp2 AND exp3 should be OF same TYPE
+--IF emp have print commission and if emp don't have comm then print no-comm
+SELECT last_name, salary,commission_pct,
+NVL2(commission_pct,'Comm','No-Comm')
+FROM employees;
+
+
+
+
+
+COALESCE(exp1,exp2,exp3,......,expn);
+
+SELECT COALESCE(NULL,NULL,3,4,5,6) FROM dual;
+
+SELECT last_name, salary,COALESCE(commission_pct,0),
+salary +salary* COALESCE(commission_pct,0) 
+FROM employees;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
 
 
   
