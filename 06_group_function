@@ -12,7 +12,6 @@ sum
 
 Rules: 
 1. group function don't allow null except count(*)
-2. In select only group by column and group function are allowed
 3. where clause use to restrict the row
 4. having clause use to restrict the group
 5, if there is any column with the group function then that column must be in group by clasue
