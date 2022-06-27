@@ -1,0 +1,123 @@
+select last_name, commission_pct from employees
+order by commission_pct;
+
+
+/*
+group function/multiple row function/agregate function
+min
+max
+avg
+count
+sum
+
+Rules: 
+1. group function don't allow null except count(*)
+2. In select only group by column and group function are allowed
+3. where clause use to restrict the row
+4. having clause use to restrict the group
+5, if there is any column with the group function then that column must be in group by clasue
+
+
+*/
+
+select min(salary), max(salary), sum(salary), avg(salary),count(salary), count(*)
+from employees;
+
+select 
+--min(commission_pct ), max(commission_pct), sum(commission_pct), 
+--avg(commission_pct),count(commission_pct), count(*),
+sum(commission_pct)/count(*), count(nvl(commission_pct,0)), avg(nvl(commission_pct,0))
+from employees;
+
+
+
+select count(*)
+from employees
+where department_id is null;
+
+
+select department_id, last_name,  min(salary), count(*)
+from employees
+group by department_id;
+
+
+select department_id, max(salary) as max_sal, round(avg(salary)) as avg_sal
+from employees
+where department_id is not null
+group by department_id;
+
+select department_id, max(salary) as max_sal, round(avg(salary)) as avg_sal
+from employees
+where department_id is not null
+group by department_id
+having max(salary)>10000;
+
+
+--employee having the min salary
+select last_name,min(salary)
+from employees
+group by last_name;
+
+
+--waq to find the last name which is duplicate
+king
+jack
+jack
+kochhar
+
+select last_name
+from employees
+group by last_name
+having count(*)>1;
+
+--waq to find year wise no of employees hired
+10jan-2001
+20 -feb-2001
+5-mar-2003
+
+select * from employees;
+
+select to_char(hire_date,'YYYY') as year,count(*) as num
+from employees
+group by to_char(hire_date,'YYYY')
+order by year;
+
+-- from    ->  where -> group by ->  having -> select -> order by
+
+1995    1996   1997 1998
+4           10      28      23
+
+select to_char(hire_date,'YYYY') as year,count(*) as num
+from employees
+where to_char(hire_date,'YYYY') in (1995,1996,1997,1998)
+group by to_char(hire_date,'YYYY')
+order by year;
+
+select to_char(hire_date,'YYYY') as year, 
+decode(to_char(hire_date,'YYYY'),1995,1,null) as "1995",
+decode(to_char(hire_date,'YYYY'),1996,1) as "1996",
+decode(to_char(hire_date,'YYYY'),1997,1) as "1997",
+decode(to_char(hire_date,'YYYY'),1998,1) as "1998"
+from employees
+where to_char(hire_date,'YYYY') in (1995,1996,1997,1998);
+
+
+select 
+count(decode(to_char(hire_date,'YYYY'),1995,1,null)) as "1995",
+count(decode(to_char(hire_date,'YYYY'),1996,1)) as "1996",
+count(decode(to_char(hire_date,'YYYY'),1997,1) ) as "1997",
+count(decode(to_char(hire_date,'YYYY'),1998,1) ) as "1998",
+count(*) as total
+from employees
+--where to_char(hire_date,'YYYY') in (1995,1996,1997,1998);
+
+
+select count(distinct manager_id) from employees;
+
+
+
+
+
+
+
+
