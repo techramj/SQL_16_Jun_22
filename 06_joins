@@ -28,6 +28,42 @@ emp
 did -> Departments
                loc_Id  -> Locations
 			                     country_id => countries
+					
+--join with more than 2 table
+
+select * from countries;
+
+
+
+select e.employee_id, e.last_name, e.department_id, d.department_name,
+      l.city, c.country_name
+from employees e join departments d
+on e.department_id = d.department_id
+join locations l
+on d.location_id=l.location_id
+join countries c
+on c.country_id= l.country_id;
+
+
+select e.employee_id, e.last_name, department_id, d.department_name,
+      l.city, c.country_name
+from employees e join departments d
+using(department_id)
+join locations l
+using(location_id)
+join countries c
+using(country_id);
+
+
+
+select e.employee_id, e.last_name, e.department_id, d.department_name,
+      l.city, c.country_name
+from employees e , departments d, locations l,countries c
+where e.department_id = d.department_id
+and d.location_id=l.location_id
+and c.country_id= l.country_id;
+
+
 
 
 RULE
