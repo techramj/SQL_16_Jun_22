@@ -1,0 +1,37 @@
+JOIN
+
+1. NATURAL JOIN
+    
+2. JOIN with using clause
+
+   select e.employee_id,e.last_name,department_id,d.department_name,
+	e.manager_id, d.manager_id
+	from employees e  join departments d
+	using(department_id);
+	
+	
+3. JOIN with on clause
+   select e.employee_id,e.last_name,e.department_id,d.department_name,
+	e.manager_id, d.manager_id as dept_manager_id
+	from employees e  join departments d
+	on e.department_id = d.department_id;
+	
+4. ansi 1999
+    select e.employee_id,e.last_name,e.department_id,d.department_name,
+	e.manager_id, d.manager_id as dept_manager_id
+	from employees e, departments d
+	where e.department_id = d.department_id;
+     
+
+
+emp
+did -> Departments
+               loc_Id  -> Locations
+			                     country_id => countries
+
+
+RULE
+1. give qualifier to column_name if available in both table 
+2. column part of USING clause cannot have qualifier
+
+
