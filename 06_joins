@@ -65,6 +65,63 @@ and c.country_id= l.country_id;
 
 
 
+Type of Join
+1. Inner Join
+2. Outer Join
+   a. Left outer join
+   b. right outer join
+   c. full outer join
+3. self join
+4. equi join
+5. non equi join
+6. cross join
+
+
+
+INNER JOIN
+select e.employee_id,e.last_name,e.department_id,d.department_name
+from employees e  join departments d
+on e.department_id = d.department_id;
+
+OUTER JOIN 
+a. left outer join = inner join + all the rows of left table
+    select e.employee_id,e.last_name,d.department_id,d.department_name
+    from employees e  left outer join departments d
+    on e.department_id = d.department_id;
+    
+    select e.employee_id,e.last_name,d.department_id,d.department_name
+    from employees e  , departments d
+    where e.department_id = d.department_id(+);
+    
+b. right outer join
+   select e.employee_id,e.last_name,d.department_id,d.department_name
+    from employees e  right outer join departments d
+    on e.department_id = d.department_id;
+    
+    select e.employee_id,e.last_name,d.department_id,d.department_name
+    from employees e  , departments d
+    where e.department_id(+) = d.department_id;
+
+
+c. full outer join
+   select e.employee_id,e.last_name,d.department_id,d.department_name
+    from employees e  full outer join departments d
+    on e.department_id = d.department_id;
+    
+    select e.employee_id,e.last_name,d.department_id,d.department_name
+    from employees e  , departments d
+    where e.department_id(+) = d.department_id(+);
+    --not feasible full outer join with 1999 syntax
+    
+SELF JOIN
+
+select e.employee_id, e.last_name, e.manager_id, m.last_name as manager_name
+from employees e left outer join employees m 
+on e.manager_id = m.employee_id
+order by e.employee_id;
+
+
+
 
 RULE
 1. give qualifier to column_name if available in both table 
