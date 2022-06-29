@@ -1,6 +1,8 @@
 JOIN
 
 1. NATURAL JOIN
+    select department_name,city
+    from departments natural join locations;
     
 2. JOIN with using clause
 
@@ -120,6 +122,18 @@ from employees e left outer join employees m
 on e.manager_id = m.employee_id
 order by e.employee_id;
 
+NON_EQUI JOIN
+select e.employee_id,e.last_name,e.salary, j.grade
+ from employees e join job_grades j
+ on e.salary between j.min_sal and j.max_sal
+ 
+ CROSS JOIN
+ select employee_id,last_name,department_name
+ from employees e cross join departments d;
+ 
+  select employee_id,last_name,department_name
+ from employees e , departments d;
+
 
 
 
@@ -128,3 +142,23 @@ RULE
 2. column part of USING clause cannot have qualifier
 
 
+
+create table emp:
+create table emp
+as
+select * from employees where department_id in (10,20,30);
+
+
+
+Create and populate job_grade tables:
+create table job_grades
+(min_sal number,
+ max_sal number,
+ grade   char
+ );
+ 
+ insert into job_grades (min_sal,max_sal,grade) values (0,5000,'A');
+ insert into job_grades (min_sal,max_sal,grade) values (5001,10000,'B');
+ insert into job_grades (min_sal,max_sal,grade) values (10001,15000,'C');
+ insert into job_grades (min_sal,max_sal,grade) values (15001,20000,'D');
+ insert into job_grades (min_sal,max_sal,grade) values (20001,50000,'E');
