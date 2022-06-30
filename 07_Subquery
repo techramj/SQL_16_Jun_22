@@ -61,9 +61,140 @@ where department_id in (select department_id from departments where department_n
 
 --name of emp working in city Toronto
 
+select last_name 
+from employees 
+where department_id in (select department_id 
+                                       from departments 
+                                       where location_id in (select location_id 
+                                                                          from locations 
+                                                                          where city='Toronto')
+                                       );
 
+
+select e.last_name
+from employees  e join departments d
+using(department_id)
+join locations l
+using(location_id)
+where l.city='Toronto';
 
 --name and dept_name who is working in city Toronto
+select e.last_name,d.department_name 
+from employees e join departments d 
+on e.department_id=d.department_id
+where d.location_id in (select location_id from locations 
+                                      where city='Toronto');
+                                      
+select e.last_name, d.department_name
+from employees  e join departments d
+using(department_id)
+join locations l
+using(location_id)
+where l.city='Toronto';          
 
 
 
+--name of emp having max salary
+
+select last_name,max(salary)
+from employees;  --syntax is wrong
+
+
+select last_name,max(salary)
+from employees
+group by last_name;  --syntax is correct but query is wrong
+
+select last_name
+from employees
+where salary=max(salary);--syntax is wrong. cannot use group fucntion in where clause
+
+
+select last_name
+from employees
+where salary= (select max(salary) from employees );
+
+--top n analysis
+
+-- from -> where -> group by -> having -> select -> order by
+
+
+select rownum as rank, salary from employees
+order by salary desc;
+
+
+select rownum,salary from (
+select distinct salary from emp
+order by salary desc
+)
+where rownum=1
+;
+
+select * from (select * from employees order by last_name desc)
+where salary>5000;
+--order by -> where 
+
+
+select distinct salary
+from emp
+where rownum=1
+order by salary desc;
+
+select * from emp;
+
+
+--2nd highest salary or nth hightest salary
+select min(salary) from (
+select distinct salary from emp
+order by salary desc
+)
+where rownum<=2;
+
+
+select max(salary)
+from employees
+where salary <(select max(salary) from employees );
+
+
+
+8000  - 3rd
+2000 - 5th
+9000  -2nd
+4000 - 4th
+10000- 1st
+
+select distinct salary
+from employees outer
+where 2-1 = (select count(distinct salary) from employees where salary> outer.salary);
+
+select distinct salary from (
+    select last_name,salary, dense_rank() over (order by salary desc) as rank
+    -- rank() over (order by salary desc) as rank1
+from employees
+)
+where rank=2;
+
+school
+
+98   1 rank
+97  2nd
+97  2nd
+96  4th
+
+
+
+
+--co related sub query
+
+select * from table_name outer
+where operator = (select * from table_name2 inner where inner.col1 = outer.col1)
+
+
+--name, dept_id, min(salary) of their deparment
+
+select last_name,salary,department_id,
+(select min(salary) from employees inner where inner.department_id=outer.department_id) as min_sal
+from employees outer;
+
+select department_id,min(salary) as min_sal
+from employees
+group by department_id;
