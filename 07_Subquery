@@ -1,0 +1,69 @@
+--emp whose salary is greater than Abel' salary
+
+select salary
+from employees
+where last_name ='Abel';
+
+    select last_name,salary
+    from employees
+    where salary>11000;
+    
+    --subquery on right side
+   select last_name,salary
+    from employees
+    where salary>all(select salary
+                            from employees
+                            where last_name ='Grant');
+                            
+       
+       
+    --subquery on left side                     
+     select last_name,salary
+    from employees
+    where (select salary
+                            from employees
+                            where last_name ='Abel')<salary;
+                    
+ select salary from employees
+  where employee_id=10000; 
+  
+  
+
+--Type of sub-query(Inner query)
+--1. single row sub query
+       single row operator  =>  >   >=   <  <= = != between and
+        
+--2. multiple row subquery
+      multiple row operator  =>  in  any all
+   
+
+
+
+salary  > any 12000,15000  => salary>12000 or salary>150000
+salary  > all 12000,15000  => salary>12000  and salary>150000;
+
+
+--list of emp working with king
+select *
+from employees
+where department_id  in (select department_id from employees where last_name='King');
+
+
+
+--list of emp working in dept IT
+
+
+select department_id from departments where department_name='IT';
+
+select * from employees
+where department_id in (select department_id from departments where department_name='IT');
+
+
+--name of emp working in city Toronto
+
+
+
+--name and dept_name who is working in city Toronto
+
+
+
