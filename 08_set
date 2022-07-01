@@ -1,0 +1,86 @@
+select last_name,hire_date
+from employees
+where department_id  in (select department_id from employees
+                                        where last_name ='Zlotkey')
+and last_name != 'Zlotkey';
+
+
+select last_name,hire_date
+from employees
+where department_id  in (select department_id from employees
+                                        where upper(last_name) = upper('&&name'))
+and upper(last_name) != upper('&name');
+
+
+
+select *
+from employees 
+where manager_id in (select employee_id from employees 
+                                  where last_name='King');
+                                  
+
+--Set operator:
+
+union
+intersect
+minus
+union all
+
+a={1,2,3,4,4,5,5,5,6}
+b={2,4,4,6,6,6,8}
+
+
+a union b = {1,2,3,4,5,6,8}
+
+a intersect b ={2,4,6}
+
+a minus b = {1,3,5}
+
+b minus a= {8}
+
+a union all b ={1,2,3,4,4,5,5,5,6,2,4,4,6,6,6,8 }
+
+
+select * from job_history;
+
+--current job and previous job  of an emp
+
+select employee_id,job_id from employees
+union all
+select employee_id,job_id from job_history;
+
+
+select job_id,employee_id from employees
+union
+select job_id,employee_id from job_history;
+
+
+--employee who changes the job and again working with previous
+select employee_id,job_id from employees
+intersect
+select employee_id,job_id from job_history;
+
+
+--minus
+-- list of employee who is not a manger
+select employee_id from employees
+minus
+select manager_id from employees;
+
+select employee_id from employees
+where employee_id not in (select nvl(manager_id,0) from employees);
+
+
+
+
+select employee_id as id1,job_id as j from employees
+intersect
+select employee_id as id2,job_id as jid from job_history
+order by j;
+
+from -> where ->group by ->having ->select-> set->order by;
+
+
+--list of countries where department is not present
+
+
