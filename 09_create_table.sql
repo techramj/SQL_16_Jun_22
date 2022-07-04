@@ -89,3 +89,21 @@ insert into dept values (20,'IT');
 
 select * from dept;
 
+
+ --emp(id, name, salary, did,email)
+    create table emp
+    (
+    id number(4) primary key,
+    name varchar2(20) not null,
+    salary number(8,2) check(salary>0),
+    did number references dept(dept_id),
+    email varchar2(30) unique
+    );
+    
+    insert into emp(id,name,salary,email, did) values (1,'Jack',1000,'jack@mail.com',10);
+    insert into emp(id,name,salary,email, did) values (2,'Jack',1000,'jack1@mail.com',100);
+    insert into emp(id,name,salary,email, did) values (3,'Jackie',2000,null,20);
+    insert into emp(id,name,salary,email, did) values (4,'Jackie',2000,null,20);
+    insert into emp(id,name,salary,email, did) values (5,'Jessica',1,null,20);
+    
+
