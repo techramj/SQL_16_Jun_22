@@ -1,0 +1,279 @@
+    
+    /*
+    DDL
+    1. Create
+    2. Alter
+    3. Rename
+    4. Truncate
+    
+    
+    DML
+    1. Select
+    2. Insert : insert new row
+        syntax 1: insert into table_name(col1, col2, col3....coln) values (val1, val2, val3....valn);
+        Syntax 2: insert into table_name values (val1, val2, val3....valn);
+                  rule:
+        
+    3.Update: do the changes in existing row
+      syntax: update table_name
+                  set col1 = val1, col2 = val2....., coln=valn
+                  [where condtion];
+        
+    4.Delete: delete/remove the existing row
+      syntax: delete [from] table_name
+                  [where condtion];
+    
+    --CREATE table
+    syntax: create table table_name
+                 (col1 datatype [constraint], 
+                 col2 datatype,
+                 ---.......
+                 );
+                 
+    Datatype in oracle:  https://docs.oracle.com/cd/A87860_01/doc/server.817/a76965/c10datyp.htm
+    
+    Number(p,s)  
+    p= precision 1 to 38
+    s = scale      -84 to 127
+    
+    number(7,2)  -> -99999.99 to +99999.99
+    number(2,2) - >  -0.99 to 0.00
+    
+    
+    varchar2(n) => variablle character, size 4000
+    char(n)   =>size 2000
+    
+    Date
+    
+    CONSTRAINT
+    ----------------
+    1. PRIMARY KEY
+    2. UNIQUE
+    3. NOT NULL
+    4. FOREIGN KEY
+    5. CHECK
+    
+    
+    ALTER
+---------------
+    alter table table_name
+    add|modify|drop(col [spec]);
+    */
+    
+    
+    --CREATE TABLE DEPT without constraint
+    create table dept
+    (
+    did number(4), 
+    dname varchar2(10)
+    );
+    
+    
+    Drop table dept;
+    
+    
+    desc dept;
+    
+    --insert  rows in dept
+    insert into dept(did, dname) values (10,'IT');
+    insert into dept values (20,'HR');
+    insert into dept(dname, did) values ('ADMIN',30);
+    insert into dept(did) values (40);
+    insert into dept values (50,null);
+    
+    insert into dept values (100.6,'HR1');
+    
+    select * from dept;
+    
+    
+    --create table with constriant
+    create table dept
+    ( 
+    dept_id number(4) primary key,
+    dept_name varchar2(20) not null
+    );
+    
+    desc dept;
+    
+    insert into dept(dept_id, dept_name) values (10,'IT');
+    insert into dept values (20,'IT');
+    insert into dept values (100,'ADMIN');
+    
+    select * from dept;
+    
+    
+    --emp(id, name, salary, did,email)
+    create table emp
+    (
+    id number(4) primary key,
+    name varchar2(20) not null,
+    salary number(8,2) check(salary>0),
+    did number references dept(dept_id),
+    email varchar2(30) unique
+    );
+    
+    insert into emp(id,name,salary,email, did) values (1,'Jack',1000,'jack@mail.com',10);
+    insert into emp(id,name,salary,email, did) values (2,'Jack',1000,'jack1@mail.com',100);
+    insert into emp(id,name,salary,email, did) values (3,'Jackie',2000,null,20);
+    insert into emp(id,name,salary,email, did) values (4,'Jackie',2000,null,20);
+    insert into emp(id,name,salary,email, did) values (5,'Jessica',1,null,20);
+    
+    select * from dept;
+    select * from emp;
+    
+    update emp
+    set salary = 100000
+    where id=5;
+    
+    update emp
+    set did=20;
+    
+    
+    delete from emp
+    where id in (4,5);
+    
+    
+
+    
+desc emp;
+
+
+--add one column mgr_id in emp table
+alter table emp
+add (mgr_id number);
+
+--drop two column did and email
+alter table emp
+drop(did,email);
+
+
+--modify name from varchar2(20) to varchar2(25)
+  alter table emp
+  modify(name varchar2(25)
+  );
+  
+  --rename the column name
+  alter table emp
+  rename column mgr_id to manager_id;
+    
+    
+    
+create table emp1(
+id  number ,
+name varchar2(10),
+salary number, 
+did number);
+
+--adding constraint pk to emp1(id)
+alter table emp1
+modify(id number primary key);
+--or
+alter table emp1
+add(primary key(id));
+
+
+--disable constraint
+alter table emp1
+disable constraint SYS_C004081;
+
+
+insert into emp1 values (1,'a',1000,null);
+
+select * from emp;
+commit;
+
+
+
+
+
+
+--commit emp - o rows
+--1 row inserted
+--2 row inserted
+--update salary of id 1 to 5000
+commit;
+rollback;
+
+select * from emp;
+--alter table emp add(salary number);
+--update salary to 5000
+update emp
+set salary=5000;
+
+savepoint a;
+
+--insert 10 row
+insert into emp(id,name,salary) values (3,'Jack',4000);
+insert into emp  values (4,'John',5000);
+
+insert into emp
+select employee_id,last_name,salary from employees where rownum<=10;
+
+savepoint b;
+
+
+--increase salary by 1000
+update emp
+set salary = salary +1000;
+
+savepoint c;
+
+delete emp
+where salary<10000;
+
+select * from emp;
+
+rollback to savepoint b;
+
+commit;
+
+rollback;
+
+
+--what is transaction;
+
+update emp
+set salary=salary-1000
+where id=100;
+
+update emp
+set salary =salary +1000
+where id=1;
+
+insert into audit --
+
+Atomicity
+Consistency
+Isolation
+Durability
+
+commit;
+
+
+select * from emp where id=100;
+
+update emp set salary=salary-20000 where id =100;
+commit;
+
+
+
+--diff b/w delete and truncate
+DML    DCL
+DELETE [where]   tuncate
+
+select * from emp;
+
+delete  emp  ;
+
+rollback;
+
+truncate table emp;
+
+select * from system.abc;
+
+insert into system.abc values ('__bcd__');
+
+
+grant select on abc to hr;
+
+revoke select on abc from hr; 
