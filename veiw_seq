@@ -1,0 +1,239 @@
+select c.cust_id, c.cust_name,o.order_date,
+o.order_id, od.item_id, i.name as item_name,
+i.unit_price, od.quantity, i.unit_price* od.quantity as total
+from customers c join orders o
+on c.cust_id = o.customer_id
+join order_details od
+on od.order_id= o.order_id
+join items i
+on i.item_id=od.item_id
+--where upper(c.cust_name) ='JACK'
+order by 1,2,3,4,5
+;
+
+select  sum( i.unit_price* od.quantity) as total
+from customers c join orders o
+on c.cust_id = o.customer_id
+join order_details od
+on od.order_id= o.order_id
+join items i
+on i.item_id=od.item_id
+where upper(c.cust_name) ='JACK';
+
+
+select c.cust_name, sum( i.unit_price* od.quantity) as total
+from customers c join orders o
+on c.cust_id = o.customer_id
+join order_details od
+on od.order_id= o.order_id
+join items i
+on i.item_id=od.item_id
+group  by c.cust_name;
+
+
+
+
+select * from customers;
+select * from orders;
+select * from order_details;
+
+
+select  to_char(o.order_date,'MON-YY')as month, sum( i.unit_price* od.quantity) as total
+from customers c join orders o
+on c.cust_id = o.customer_id
+join order_details od
+on od.order_id= o.order_id
+join items i
+on i.item_id=od.item_id
+group by to_char(o.order_date,'MON-YY') 
+order by to_date(to_char(o.order_date,'MON-YY'),'MON-YY');
+
+
+
+
+
+
+
+
+--
+objects
+1. Table
+2. View
+3. Sequence
+
+
+
+SEQUENCE:
+
+drop sequence seq_name;
+
+create sequence seq_name
+start with n               --=> 1
+increment by n         --=> 1
+minvalue n|nominvalue    -->minvalue =1
+maxvalue n|nomaxvalue  --> maxvalue =>nomaxvalue
+cycle|nocycle                    --> nocycle
+cache n|nocache;     --=>cache 20
+
+--create sequence
+create sequence seq1;
+
+select seq1.nextval from dual;
+select seq1.currval from dual;
+
+select * from emp;
+
+insert into emp(id,name,salary) values (seq1.nextval,'a',1000);
+insert into emp(id,name,salary) values (seq1.nextval,'a',1000);
+insert into emp(id,name,salary) values (seq1.nextval,'a',1000);
+
+
+create sequence seq2
+start with 10
+maxvalue 50;
+
+select seq2.nextval from dual;
+
+
+create sequence seq3
+start with 10
+increment by 10
+maxvalue 50;
+
+select seq3.nextval from dual;
+
+
+create sequence seq4
+start with 10
+increment by 10
+maxvalue 50
+cycle
+nocache;
+
+select seq4.nextval from dual;
+
+
+create sequence seq5
+start with 10
+increment by 10
+maxvalue 50
+minvalue 5
+cycle
+nocache;
+
+select seq5.nextval from dual;
+
+
+create sequence seq6
+start with 10
+increment by 10
+maxvalue 500
+minvalue 5
+cycle
+cache 30;
+
+
+
+--view
+
+select * from emp;
+c
+drop table emp_copy;
+
+--replica of table
+create table emp_copy
+as
+select * from emp;
+
+select * from emp;
+select * from emp_copy;
+
+create or replace view v1
+as
+select * from emp;
+
+select * from emp;
+select * from emp_copy;
+select * from v1;
+
+insert into emp values (seq1.nextval,'John',12000);
+
+create table employee_cpy
+as
+select  employee_id as id,first_name,last_name,hire_date from employees;
+
+
+select * from employee_cpy;
+
+drop view emp_vw;
+create or replace view emp_vw
+as
+select  employee_id as id,first_name,last_name,hire_date,manager_id from employees;
+
+select * from emp_vw;
+
+
+
+
+
+
+create or replace view order_vw
+as
+select c.cust_id, c.cust_name,
+o.order_id, o.order_date,od.item_id, 
+i.name as item_name,i.unit_price, 
+od.quantity, i.unit_price* od.quantity as total
+from customers c join orders o
+on c.cust_id = o.customer_id
+join order_details od
+on od.order_id= o.order_id
+join items i
+on i.item_id=od.item_id;
+--where upper(c.cust_name) ='JACK'
+
+select * from order_vw
+where cust_name='John'
+
+select  to_char(order_date,'MON-YY')as month, sum(total)
+from order_vw
+group by to_char(order_date,'MON-YY') 
+order by to_date(to_char(order_date,'MON-YY'),'MON-YY');
+
+
+emp
+id      name    
+1       Jack
+2      John
+3       Jessica
+4       Sam
+
+salaries
+id      salary
+1       1000
+2       2000
+3       3000
+4       2500
+
+WAQ to find name and salary of emp whose salary> john salary
+
+OUtput
+Name    salary
+Jessica  3000
+sam       2500
+
+Select  e.name,s.salary
+from emp e  join salaries s 
+on e.id=s.id
+where s.salary>any(select salary from emp e1 join salaries s1
+                          on e1.id=s1.id 
+                          where e1.name='John' )
+--and e.name!='John'
+
+
+
+
+
+
+
+
+
